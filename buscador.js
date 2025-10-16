@@ -1,6 +1,6 @@
 // 🚨 ¡IMPORTANTE! REEMPLAZA ESTA URL CON LA TUYA
 // En tu archivo buscador.js
-const API_URL = 'https://script.google.com/macros/s/AKfycbwLTAaZavYw1bVQeAgBK0Thv_BGcHnJQZA3BM9G_DegHlB9uZkndaqW0XJJM-Ou3cCQ/exec';
+const API_URL = 'https://docs.google.com/spreadsheets/d/1_egcNfdJACWOMntNmeKBVvVmt7LSM9fAXfrUZJ2uEOk/edit?usp=sharing';
 // ^ DEBE SER ASÍ, NO LA URL DE LA HOJA
 
 let courseData = []; // Almacena todos los certificados activos del curso de HTML
