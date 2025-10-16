@@ -1,5 +1,5 @@
 // 🚨 URL DE LA API: La URL de implementación que termina en /exec
-const API_URL = 'https://script.google.com/macros/s/AKfycbwLTAaZavYw1bVQeAgBK0Thv_BGcHnJQZA3BM9G_DegHlB9uZkndaqW0XJJM-Ou3cCQ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxKngNdCtwQMY4iFt9WL_vzzBXw50bJimqecyoEOatN5QbctLecFfRinLCdLsjC8rlZ/exec';
 
 let courseData = []; 
 
