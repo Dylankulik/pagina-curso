@@ -1,9 +1,10 @@
-// 🚨 URL DE LA API: La URL de implementación que termina en /exec
-const API_URL = 'https://script.google.com/macros/s/AKfycbxKngNdCtwQMY4iFt9WL_vzzBXw50bJimqecyoEOatN5QbctLecFfRinLCdLsjC8rlZ/exec';
+// 🚨 ¡IMPORTANTE! REEMPLAZA ESTA URL CON LA URL DE TU IMPLEMENTACIÓN /exec MÁS RECIENTE
+// Usando una URL de ejemplo
+const API_URL = 'https://script.google.com/macros/s/AKfycbzYysmlDdEmxrpVK0lV2IXXGptnQBVrGAmur6t5-Fs6SQwTumKJaSzjrtcSAaNaTMi1/exec';
 
 let courseData = []; 
 
-// Elementos del DOM (Asegúrate que estos IDs existan en tu HTML)
+// Elementos del DOM
 const dniInput = document.getElementById('dniInput');
 const loadingMessage = document.getElementById('loading-message');
 const noResultsMessage = document.getElementById('no-results-message');
@@ -15,6 +16,21 @@ const certDNI = document.getElementById('cert-dni');
 const certStatus = document.getElementById('cert-status');
 const certExpiry = document.getElementById('cert-expiry');
 
+// FUNCIÓN DE AYUDA: Convierte el número de serie de fecha de Google Sheets (ej: 46311.70...)
+function serialDateToReadable(serialDate) {
+    if (!serialDate) return 'N/A';
+    
+    // El formato de fecha de serie de Google Sheets comienza el 30/12/1899.
+    // Usamos Date.UTC para manejar las zonas horarias
+    const MS_PER_DAY = 24 * 60 * 60 * 1000;
+    const dateOffset = new Date(Date.UTC(1899, 11, 30));
+    const finalDate = new Date(dateOffset.getTime() + (serialDate * MS_PER_DAY));
+    
+    // Devuelve la fecha en formato local (ej: 16/10/2025)
+    return finalDate.toLocaleDateString('es-AR');
+}
+
+
 // 1. FUNCIÓN PARA CARGAR LOS DATOS DE LA API
 async function loadCourseData() {
     loadingMessage.textContent = 'Cargando datos del curso...';
@@ -23,6 +39,7 @@ async function loadCourseData() {
     try {
         const response = await fetch(API_URL);
         
+        // Manejo de respuesta no OK si el script falla en el servidor
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -44,9 +61,9 @@ async function loadCourseData() {
     }
 }
 
-// 2. FUNCIÓN DE BÚSQUEDA 
+// 2. FUNCIÓN DE BÚSQUEDA (se ejecuta al escribir)
 function searchCertificate() {
-    // Normaliza el DNI ingresado
+    // Normaliza el DNI ingresado por el usuario
     const queryDNI = dniInput.value.trim().replaceAll('.', '').replaceAll('-', ''); 
     
     noResultsMessage.style.display = 'none';
@@ -56,34 +73,35 @@ function searchCertificate() {
         return; 
     }
     
-    // Busca el certificado
+    // Busca el certificado coincidente
     const foundCert = courseData.find(cert => {
-        // Normaliza el DNI de la API
         const apiDNI = cert.DNI ? cert.DNI.toString().trim().replaceAll('.', '').replaceAll('-', '') : '';
-        
         return apiDNI === queryDNI;
     });
 
     // 3. MUESTRA LOS RESULTADOS
     if (foundCert) {
-    // Muestra los detalles del certificado
-    certCourse.textContent = 'HTML';
-    
-    // 🚨 CORRECCIÓN CLAVE: Usamos corchetes para acceder al encabezado exacto
-    certName.textContent = foundCert['Nombre y Apellido']; 
-    
-    certDNI.textContent = foundCert.DNI;
-    
-    // ...
-    // También ajustamos la Fecha de Vencimiento para usar el encabezado exacto
-    certExpiry.textContent = foundCert['FECHA_VENCIM.']; 
-    
-    certificateDetails.style.display = 'block'; 
-}
+        
+        // 🚨 CORRECCIÓN 1: Accede al nombre usando la clave exacta de la hoja
+        certName.textContent = foundCert['Nombre y Apellido']; 
+        
+        certCourse.textContent = 'HTML'; 
+        certDNI.textContent = foundCert.DNI;
+        
+        // Estado y color (viene del script: Estado y color)
+        certStatus.textContent = foundCert.Estado;
+        certStatus.style.color = foundCert.Color; 
+        
+        // 🚨 CORRECCIÓN 2: Accede a la clave de la fecha y la formatea
+        const serialDate = foundCert['FECHA_VENCIM.']; // Usando la clave con el punto
+        certExpiry.textContent = serialDateToReadable(serialDate);
+        
+        certificateDetails.style.display = 'block'; // Muestra la tarjeta de resultados
+    } else {
+        noResultsMessage.style.display = 'block';
+    }
 }
 
-// Vincula la función al input
+// Vincula la función al input y carga los datos al inicio
 dniInput.addEventListener('input', searchCertificate);
-
-// Inicia la carga de datos al abrir la página
 loadCourseData();
