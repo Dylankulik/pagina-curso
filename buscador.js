@@ -1,6 +1,6 @@
 // 🚨 ¡IMPORTANTE! REEMPLAZA ESTA URL CON LA URL DE TU IMPLEMENTACIÓN /exec MÁS RECIENTE
 // Usando una URL de ejemplo
-const API_URL = 'https://script.google.com/macros/s/AKfycbzYysmlDdEmxrpVK0lV2IXXGptnQBVrGAmur6t5-Fs6SQwTumKJaSzjrtcSAaNaTMi1/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxKngNdCtwQMY4iFt9WL_vzzBXw50bJimqecyoEOatN5QbctLecFfRinLCdLsjC8rlZ/exec';
 
 let courseData = []; 
 
