@@ -1,0 +1,192 @@
+/* --- Estilos Generales --- */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; 
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #007bff; 
+    color: white;
+    padding: 30px 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+/* --- Estilos de la Cuadrícula de Inicio (Página Principal) --- */
+.grid-container-inicio {
+    display: grid;
+    /* Por defecto, 2 columnas (para escritorio) */
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px;
+    max-width: 1000px;
+    margin: 40px auto; 
+    padding: 0 20px;
+}
+
+/* --- Estilos de las Tarjetas de Inicio --- */
+.card {
+    text-decoration: none;
+    color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-8px); 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+    font-size: 2em;
+    margin-top: 0;
+}
+
+.card p {
+    font-size: 1.2em;
+}
+
+/* --- COLORES PARA LOS 4 CUADRADOS (Se mantienen los colores de tu imagen) --- */
+.course-1 {
+    background-color: #1abc9c; /* Turquesa */
+}
+
+.course-2 {
+    background-color: #9b59b6; /* Púrpura */
+}
+
+.course-3 {
+    background-color: #f39c12; /* Naranja/Ocre */
+}
+
+.course-4 {
+    background-color: #3498db; /* Azul Claro */
+}
+
+
+/* --- Estilos para Páginas de Cursos (curso-X.html) --- */
+.page-header {
+    background-color: #007bff;
+    color: white;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.course-content {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.section-box {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.section-box h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-top: 0;
+    color: #007bff;
+}
+
+/* Estilos de botones de enlace */
+.btn-primary, .btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #2ecc71; 
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #27ae60;
+}
+
+.btn-back {
+    background-color: #f39c12; 
+    color: white;
+    font-size: 1em;
+}
+
+.btn-back:hover {
+    background-color: #e67e22;
+}
+
+/* Contenedor para incrustar el Formulario o PowerPoint (iframe) */
+.embed-container {
+    margin-top: 20px;
+}
+
+.embed-container iframe {
+    max-width: 100%; 
+    display: block;
+}
+
+/* --- Footer --- */
+footer {
+    padding: 15px 0;
+    background-color: #34495e; 
+    color: white;
+    font-size: 0.9em;
+    text-align: center;
+    margin-top: 40px;
+}
+
+
+/* ========================================================== */
+/* REGLA RESPONSIVE PARA MÓVILES (MEDIA QUERY)      */
+/* ========================================================== */
+
+/* Cuando la pantalla es menor a 768px (típicamente tabletas/móviles) */
+@media (max-width: 768px) {
+    
+    /* Hace que la cuadrícula pase de 2 columnas a 1 columna */
+    .grid-container-inicio {
+        grid-template-columns: 1fr; /* Una columna que ocupa todo el ancho */
+        max-width: 400px; /* Reducimos el ancho máximo para que quede centrado */
+    }
+
+    /* Ajustamos el padding de las tarjetas para que no se vean tan grandes */
+    .card {
+        padding: 30px 20px;
+    }
+
+    .card h2 {
+        font-size: 1.8em;
+    }
+
+    /* Alineamos el encabezado a la izquierda para mejor lectura en móvil */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 15px;
+    }
+
+    .btn-back {
+        margin-top: 15px;
+    }
+}

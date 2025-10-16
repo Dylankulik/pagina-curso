@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Certificados</title>
+    <link rel="stylesheet" href="buscar.css"> </head>
+<body>
+
+    <div class="container">
+        <h1>Buscador de Certificados</h1>
+        <p>Por favor, ingresa tu DNI para verificar el estado de tu certificado.</p>
+        
+        <div class="search-box">
+            <input type="text" id="dniInput" placeholder="Ingresa tu DNI" oninput="searchCertificate()">
+            <p id="loading-message" class="message loading">Cargando datos del curso...</p>
+        </div>
+
+        <div id="results-container">
+            <p id="no-results-message" class="message no-results" style="display:none;">
+                No se encontró un certificado activo para ese DNI.
+            </p>
+            
+            <div id="certificate-details" class="certificate-card" style="display:none;">
+                <h2>Detalles del Certificado</h2>
+                <p><strong>Curso:</strong> <span id="cert-course"></span></p>
+                <p><strong>Nombre Completo:</strong> <span id="cert-name"></span></p>
+                <p><strong>DNI:</strong> <span id="cert-dni"></span></p>
+                <p><strong>Estado:</strong> <span id="cert-status"></span></p>
+                <p><strong>Vencimiento:</strong> <span id="cert-expiry"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="buscador.js"></script> </body>
+</html>
