@@ -66,21 +66,20 @@ function searchCertificate() {
 
     // 3. MUESTRA LOS RESULTADOS
     if (foundCert) {
-        certCourse.textContent = 'HTML'; 
-        // Accedemos a las claves usando corchetes por los espacios y puntos en el encabezado
-        certName.textContent = foundCert['Nombre y Apellido']; 
-        certDNI.textContent = foundCert.DNI;
-        
-        // Estado y color
-        certStatus.textContent = foundCert.Estado;
-        certStatus.style.color = foundCert.Color; 
-        
-        certExpiry.textContent = foundCert['FECHA_VENCIM.']; 
-        
-        certificateDetails.style.display = 'block'; 
-    } else {
-        noResultsMessage.style.display = 'block';
-    }
+    // Muestra los detalles del certificado
+    certCourse.textContent = 'HTML';
+    
+    // 🚨 CORRECCIÓN CLAVE: Usamos corchetes para acceder al encabezado exacto
+    certName.textContent = foundCert['Nombre y Apellido']; 
+    
+    certDNI.textContent = foundCert.DNI;
+    
+    // ...
+    // También ajustamos la Fecha de Vencimiento para usar el encabezado exacto
+    certExpiry.textContent = foundCert['FECHA_VENCIM.']; 
+    
+    certificateDetails.style.display = 'block'; 
+}
 }
 
 // Vincula la función al input
