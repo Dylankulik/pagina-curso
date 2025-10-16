@@ -93,7 +93,7 @@ function searchCertificate() {
         certStatus.style.color = foundCert.Color; 
         
         // 🚨 CORRECCIÓN 2: Accede a la clave de la fecha y la formatea
-        const serialDate = foundCert['FECHA_VENCIM.']; // Usando la clave con el punto
+        const serialDate = foundCert['FECHA_VENCIM']; // Usando la clave con el punto
         certExpiry.textContent = serialDateToReadable(serialDate);
         
         certificateDetails.style.display = 'block'; // Muestra la tarjeta de resultados
