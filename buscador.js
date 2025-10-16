@@ -1,11 +1,9 @@
-// 🚨 ¡IMPORTANTE! REEMPLAZA ESTA URL CON LA TUYA
-// En tu archivo buscador.js
+// 🚨 URL DE LA API: La URL de implementación que termina en /exec
 const API_URL = 'https://script.google.com/macros/s/AKfycbzYysmlDdEmxrpVK0lV2IXXGptnQBVrGAmur6t5-Fs6SQwTumKJaSzjrtcSAaNaTMi1/exec';
-// ^ dsadasasdsasad
 
-let courseData = []; // Almacena todos los certificados activos del curso de HTML
+let courseData = []; 
 
-// Elementos del DOM para actualizar (asegúrate de que estos IDs existan en tu HTML)
+// Elementos del DOM (Asegúrate que estos IDs existan en tu HTML)
 const dniInput = document.getElementById('dniInput');
 const loadingMessage = document.getElementById('loading-message');
 const noResultsMessage = document.getElementById('no-results-message');
@@ -20,70 +18,73 @@ const certExpiry = document.getElementById('cert-expiry');
 // 1. FUNCIÓN PARA CARGAR LOS DATOS DE LA API
 async function loadCourseData() {
     loadingMessage.textContent = 'Cargando datos del curso...';
-    loadingMessage.style.color = '#3498db'; // Azul
+    loadingMessage.style.color = '#3498db'; 
 
     try {
         const response = await fetch(API_URL);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
         
-        // Almacena los datos (ya filtrados como 'APROBADO' por el Apps Script)
         courseData = data; 
         
         loadingMessage.textContent = 'Datos cargados. ¡Listo para buscar!';
         loadingMessage.style.color = 'green';
-        dniInput.focus(); // Pone el foco en el campo de búsqueda
+        dniInput.focus();
         
         console.log(`Certificados activos cargados: ${courseData.length}`);
 
     } catch (error) {
-        loadingMessage.textContent = 'Error: No se pudieron cargar los datos. Revisa la URL de la API.';
+        loadingMessage.textContent = 'Error: No se pudieron cargar los datos. Revisa la consola para más detalles.';
         loadingMessage.style.color = 'red';
         console.error("Error al cargar la API:", error);
     }
 }
 
-// 2. FUNCIÓN DE BÚSQUEDA (se ejecuta al escribir)
+// 2. FUNCIÓN DE BÚSQUEDA 
 function searchCertificate() {
-    // 1. Normaliza el DNI ingresado por el usuario (elimina espacios, puntos, guiones)
+    // Normaliza el DNI ingresado
     const queryDNI = dniInput.value.trim().replaceAll('.', '').replaceAll('-', ''); 
     
-    // Ocultar mensajes anteriores
     noResultsMessage.style.display = 'none';
     certificateDetails.style.display = 'none';
 
-    if (queryDNI.length < 5) { // Esperamos al menos 5 caracteres para buscar
+    if (queryDNI.length < 5) { 
         return; 
     }
     
-    // 2. Busca el certificado coincidente
+    // Busca el certificado
     const foundCert = courseData.find(cert => {
-        // Normaliza el DNI que viene de la API para asegurar la coincidencia exacta
-        // Esto es crucial si el DNI en la hoja tiene espacios o está como número/string.
+        // Normaliza el DNI de la API
         const apiDNI = cert.DNI ? cert.DNI.toString().trim().replaceAll('.', '').replaceAll('-', '') : '';
         
-        // Comprobamos si el DNI de la API coincide exactamente con el DNI ingresado
         return apiDNI === queryDNI;
     });
 
     // 3. MUESTRA LOS RESULTADOS
     if (foundCert) {
-        // Muestra los detalles del certificado
-        certCourse.textContent = 'HTML'; // Como solo tienes 1 curso, se puede poner fijo.
-        certName.textContent = foundCert.NombreCompleto;
+        certCourse.textContent = 'HTML'; 
+        // Accedemos a las claves usando corchetes por los espacios y puntos en el encabezado
+        certName.textContent = foundCert['Nombre y Apellido']; 
         certDNI.textContent = foundCert.DNI;
         
-        // Estado y color (viene del script: Activo/Vencido y color: verde/rojo)
+        // Estado y color
         certStatus.textContent = foundCert.Estado;
         certStatus.style.color = foundCert.Color; 
         
-        certExpiry.textContent = foundCert.FechaVencimiento;
+        certExpiry.textContent = foundCert['FECHA_VENCIM.']; 
         
-        certificateDetails.style.display = 'block'; // Muestra la tarjeta de resultados
+        certificateDetails.style.display = 'block'; 
     } else {
-        // Si no se encuentra, muestra el mensaje de no resultados
         noResultsMessage.style.display = 'block';
     }
 }
+
+// Vincula la función al input
+dniInput.addEventListener('input', searchCertificate);
 
 // Inicia la carga de datos al abrir la página
 loadCourseData();
